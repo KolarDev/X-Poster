@@ -1,12 +1,12 @@
 [
-  {
-    "topic": "Load Balancers",
-    "body": "Load Balancers act as traffic cops, sitting in front of your servers and routing client requests across all servers capable of fulfilling those requests.",
-    "tags": "#SystemDesign #Backend #Scalability"
-  },
-  {
-    "topic": "Microservices",
-    "body": "An architectural style that structures an application as a collection of services that are highly maintainable and testable.",
-    "tags": "#Microservices #SoftwareArchitecture"
-  }
+  { "count": 1, "topic": "Load Balancers", "body": "LBs distribute traffic across servers to prevent any single one from overloading. Key for high availability!", "tags": "#SystemDesign #Backend", "next_post": true },
+  { "count": 2, "topic": "Vertical vs Horizontal Scaling", "body": "Vertical: Adding more RAM/CPU to one machine. Horizontal: Adding more machines. Horizontal is king for scale!", "tags": "#Scalability #DevOps", "next_post": false },
+  { "count": 3, "topic": "Caching", "body": "Store frequently accessed data in memory (like Redis) to reduce DB load and speed up response times. ⚡", "tags": "#Backend #Performance", "next_post": false },
+  { "count": 4, "topic": "Database Sharding", "body": "Splitting a large DB into smaller, faster pieces (shards) across different servers. Essential for huge datasets.", "tags": "#Databases #Software", "next_post": false },
+  { "count": 5, "topic": "CDN (Content Delivery Network)", "body": "A network of servers globally that serves static content (images/JS) from the location closest to the user.", "tags": "#WebDev #Edge", "next_post": false },
+  { "count": 6, "topic": "Microservices", "body": "Breaking a monolith into small, independent services that communicate via APIs. Great for team scaling!", "tags": "#Architecture #Cloud", "next_post": false },
+  { "count": 7, "topic": "API Gateway", "body": "A single entry point for all clients. It handles routing, authentication, and rate limiting in one place.", "tags": "#APIs #Backend", "next_post": false },
+  { "count": 8, "topic": "Message Queues", "body": "Decouple services using tools like Kafka or RabbitMQ. Allows async processing so systems don't wait on each other.", "tags": "#SystemDesign #Distributed", "next_post": false },
+  { "count": 9, "topic": "SQL vs NoSQL", "body": "SQL: Structured, rigid schema, great for ACID. NoSQL: Flexible, horizontally scalable, great for unstructured data.", "tags": "#Data #Tech", "next_post": false },
+  { "count": 10, "topic": "CAP Theorem", "body": "In a distributed system, you can only pick 2: Consistency, Availability, or Partition Tolerance. Choose wisely!", "tags": "#ComputerScience #CS", "next_post": false }
 ]
