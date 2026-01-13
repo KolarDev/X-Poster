@@ -22,7 +22,7 @@ jobs:
         run: pip install tweepy python-dotenv
 
       - name: Run Morning Post
-        if: github.event.schedule == '0 8 * * *'
+        if: github.event.schedule == '0 8 * * *' || github.event_name == 'workflow_dispatch'
         env:
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
@@ -32,7 +32,7 @@ jobs:
         run: python main.py system_design
 
       - name: Run Evening Post
-        if: github.event.schedule == '0 20 * * *'
+        if: github.event.schedule == '0 20 * * *' || github.event_name == 'workflow_dispatch'
         env:
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
           TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
