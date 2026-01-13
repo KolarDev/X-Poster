@@ -2,7 +2,7 @@ import sys
 import json
 from poster import XPoster
 from modules.designer import format_system_design
-from modules.fact_checker import format_leetcode
+from modules.coder import format_leetcode
 from modules.fact_checker import format_tech_fact
 
 def find_and_update_next(content_list):
@@ -50,7 +50,7 @@ def main():
                 # Write changes back to the JSON content file (the True/False flip)
                 with open(file_path, "w") as f:
                     json.dump(content, f, indent=2)
-                    
+
     # --- MANUAL MODE ---
     elif mode == "leetcode":
         name = input("Problem Name: ")
