@@ -12,7 +12,7 @@ def format_system_design(item):
     tags = item.get("tags", "#SystemDesign #Architecture")
     
     return (
-        f"🏗️ System Design {count}\n\n"
+        f"🏗️ System Design #{count}\n\n"
         f"🔹 {topic}\n\n"
         f"{body}\n\n"
         f"{tags}"
