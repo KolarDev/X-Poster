@@ -31,7 +31,7 @@ def main():
 
     # --- AUTOMATED MODES ---
     if mode in ["system_design", "tech_facts"]:
-        file_path = f"content/{mode}.json"
+        file_path = f"contents/{mode}.json"
         with open(file_path, "r") as f:
             content = json.load(f)
         
