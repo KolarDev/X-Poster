@@ -1,4 +1,4 @@
-def format_system_design(item, count):
+def format_system_design(item):
     """
     Formats a System Design post with a professional structure.
     'item' is the dictionary from your JSON.

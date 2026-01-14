@@ -1,4 +1,4 @@
-def format_tech_fact(item, index):
+def format_tech_fact(item):
     """
     Formats a Tech Fact post with an engaging 'Did you know' style.
     'index' provides a unique number for the fact.
