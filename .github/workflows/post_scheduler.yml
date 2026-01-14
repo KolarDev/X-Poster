@@ -45,8 +45,20 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 1. Add all changes made by the python script
           git add -A
-          # The --rebase flag ensures your changes are applied on top of the remote changes
+          
+          # 2. Stash them so the working directory is 'clean' for the pull
+          git stash
+          
+          # 3. Pull the latest from the repo (to avoid 'rejected' errors)
           git pull --rebase origin main
-          git diff-index --quiet HEAD || git commit -m "Update post pointers and thread IDs [skip ci]"
+          
+          # 4. Bring your changes back
+          git stash pop || echo "No changes to pop"
+          
+          # 5. Commit and Push
+          git add -A
+          git diff-index --quiet HEAD || git commit -m "Update post pointers [skip ci]"
           git push
