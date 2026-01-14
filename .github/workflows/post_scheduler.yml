@@ -45,8 +45,8 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Use -A to stage all changes, including progress.json and content files
-          git add -A 
-          # Only commit if there are actual changes to avoid the 128 error
+          git add -A
+          # The --rebase flag ensures your changes are applied on top of the remote changes
+          git pull --rebase origin main
           git diff-index --quiet HEAD || git commit -m "Update post pointers and thread IDs [skip ci]"
           git push
