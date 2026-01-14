@@ -3,13 +3,13 @@
     "fact_number": 1,
     "fact": "The first computer bug was a real moth found trapped in a Harvard Mark II relay in 1947. \ud83e\udd8b",
     "tags": "#TechFacts #History",
-    "next_post": true
+    "next_post": false
   },
   {
     "fact_number": 2,
     "fact": "Python was named after the comedy group 'Monty Python', not the snake! \ud83d\udc0d",
     "tags": "#Python #Programming",
-    "next_post": false
+    "next_post": true
   },
   {
     "fact_number": 3,
