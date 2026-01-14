@@ -4,14 +4,14 @@
     "topic": "Load Balancers",
     "body": "LBs distribute traffic across servers to prevent any single one from overloading. Key for high availability!",
     "tags": "#SystemDesign #Backend",
-    "next_post": true
+    "next_post": false
   },
   {
     "count": 2,
     "topic": "Vertical vs Horizontal Scaling",
     "body": "Vertical: Adding more RAM/CPU to one machine. Horizontal: Adding more machines. Horizontal is king for scale!",
     "tags": "#Scalability #DevOps",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 3,
