@@ -4,7 +4,8 @@ def format_tech_fact(item):
     'index' provides a unique number for the fact.
     """
     fact = item.get("fact", "")
-    num = item.get("fact_number", "?")
+    raw_num = item.get("fact_number", "?")
+    num = f"{int(raw_num):03}"
     tags = item.get("tags", "#TechFacts #Learning")
     
     return (

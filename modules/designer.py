@@ -6,7 +6,9 @@ def format_system_design(item):
     """
     topic = item.get("topic", "System Design")
     body = item.get("body", "")
-    count = item.get("count", "?")
+    raw_count = item.get("count", 0)
+    count = f"{int(raw_count):03}"
+
     tags = item.get("tags", "#SystemDesign #Architecture")
     
     return (
