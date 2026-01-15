@@ -11,14 +11,14 @@
     "topic": "Vertical vs Horizontal Scaling",
     "body": "Vertical: Adding more RAM/CPU to one machine. Horizontal: Adding more machines. Horizontal is king for scale!",
     "tags": "#Scalability #DevOps",
-    "next_post": true
+    "next_post": false
   },
   {
     "count": 3,
     "topic": "Caching",
     "body": "Store frequently accessed data in memory (like Redis) to reduce DB load and speed up response times. \u26a1",
     "tags": "#Backend #Performance",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 4,
