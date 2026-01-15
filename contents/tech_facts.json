@@ -9,13 +9,13 @@
     "fact_number": 2,
     "fact": "Python was named after the comedy group 'Monty Python', not the snake! \ud83d\udc0d",
     "tags": "#Python #Programming",
-    "next_post": true
+    "next_post": false
   },
   {
     "fact_number": 3,
     "fact": "The first domain name ever registered was Symbolics.com on March 15, 1985.",
     "tags": "#Internet #WebHistory",
-    "next_post": false
+    "next_post": true
   },
   {
     "fact_number": 4,
