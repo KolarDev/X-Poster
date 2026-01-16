@@ -18,14 +18,14 @@
     "topic": "Caching",
     "body": "Store frequently accessed data in memory (like Redis) to reduce DB load and speed up response times. \u26a1",
     "tags": "#Backend #Performance",
-    "next_post": true
+    "next_post": false
   },
   {
     "count": 4,
     "topic": "Database Sharding",
     "body": "Splitting a large DB into smaller, faster pieces (shards) across different servers. Essential for huge datasets.",
     "tags": "#Databases #Software",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 5,
