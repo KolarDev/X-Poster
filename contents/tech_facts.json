@@ -15,13 +15,13 @@
     "fact_number": 3,
     "fact": "The first domain name ever registered was Symbolics.com on March 15, 1985.",
     "tags": "#Internet #WebHistory",
-    "next_post": true
+    "next_post": false
   },
   {
     "fact_number": 4,
     "fact": "About 90% of the world's currency only exists on computers today. Physical cash is a tiny fraction!",
     "tags": "#FinTech #Digital",
-    "next_post": false
+    "next_post": true
   },
   {
     "fact_number": 5,
