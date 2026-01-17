@@ -21,13 +21,13 @@
     "fact_number": 4,
     "fact": "About 90% of the world's currency only exists on computers today. Physical cash is a tiny fraction!",
     "tags": "#FinTech #Digital",
-    "next_post": true
+    "next_post": false
   },
   {
     "fact_number": 5,
     "fact": "CAPTCHA stands for 'Completely Automated Public Turing test to tell Computers and Humans Apart'.",
     "tags": "#CyberSecurity #Tech",
-    "next_post": false
+    "next_post": true
   },
   {
     "fact_number": 6,
