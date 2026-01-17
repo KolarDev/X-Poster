@@ -13,10 +13,17 @@ class XPoster:
             access_token=os.getenv("TWITTER_ACCESS_TOKEN"),
             access_token_secret=os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
         )
-
+        
     def post(self, text, thread_id=None):
         try:
-            response = self.client.create_tweet(text=text, in_reply_to_tweet_id=thread_id)
+            if thread_id:
+                response = self.client.create_tweet(
+                    text=text, 
+                    quote_tweet_id=thread_id
+                )
+            else:
+                response = self.client.create_tweet(text=text)
+
             return response.data['id']
         except Exception as e:
             print(f"Error posting to X: {e}")
