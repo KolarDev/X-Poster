@@ -25,14 +25,14 @@
     "topic": "Database Sharding",
     "body": "Splitting a large DB into smaller, faster pieces (shards) across different servers. Essential for huge datasets.",
     "tags": "#Databases #Software",
-    "next_post": true
+    "next_post": false
   },
   {
     "count": 5,
     "topic": "CDN (Content Delivery Network)",
     "body": "A network of servers globally that serves static content (images/JS) from the location closest to the user.",
     "tags": "#WebDev #Edge",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 6,
