@@ -149,6 +149,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Made with ❤️ by [Your Name]**
-
-Would you like me to also generate a `LICENSE` file text for you to include in the repo?
+**Made with ❤️ by [Kolardev]**
