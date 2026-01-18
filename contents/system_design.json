@@ -32,14 +32,14 @@
     "topic": "CDN (Content Delivery Network)",
     "body": "A network of servers globally that serves static content (images/JS) from the location closest to the user.",
     "tags": "#WebDev #Edge",
-    "next_post": true
+    "next_post": false
   },
   {
     "count": 6,
     "topic": "Microservices",
     "body": "Breaking a monolith into small, independent services that communicate via APIs. Great for team scaling!",
     "tags": "#Architecture #Cloud",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 7,
