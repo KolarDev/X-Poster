@@ -4,7 +4,7 @@
     "topic": "Load Balancers",
     "body": "LBs distribute traffic across servers to prevent any single one from overloading. Key for high availability!",
     "tags": "#SystemDesign #Backend",
-    "next_post": false
+    "next_post": true
   },
   {
     "count": 2,
@@ -32,41 +32,6 @@
     "topic": "CDN (Content Delivery Network)",
     "body": "A network of servers globally that serves static content (images/JS) from the location closest to the user.",
     "tags": "#WebDev #Edge",
-    "next_post": false
-  },
-  {
-    "count": 6,
-    "topic": "Microservices",
-    "body": "Breaking a monolith into small, independent services that communicate via APIs. Great for team scaling!",
-    "tags": "#Architecture #Cloud",
-    "next_post": true
-  },
-  {
-    "count": 7,
-    "topic": "API Gateway",
-    "body": "A single entry point for all clients. It handles routing, authentication, and rate limiting in one place.",
-    "tags": "#APIs #Backend",
-    "next_post": false
-  },
-  {
-    "count": 8,
-    "topic": "Message Queues",
-    "body": "Decouple services using tools like Kafka or RabbitMQ. Allows async processing so systems don't wait on each other.",
-    "tags": "#SystemDesign #Distributed",
-    "next_post": false
-  },
-  {
-    "count": 9,
-    "topic": "SQL vs NoSQL",
-    "body": "SQL: Structured, rigid schema, great for ACID. NoSQL: Flexible, horizontally scalable, great for unstructured data.",
-    "tags": "#Data #Tech",
-    "next_post": false
-  },
-  {
-    "count": 10,
-    "topic": "CAP Theorem",
-    "body": "In a distributed system, you can only pick 2: Consistency, Availability, or Partition Tolerance. Choose wisely!",
-    "tags": "#ComputerScience #CS",
     "next_post": false
   }
 ]
