@@ -1,64 +1,76 @@
-name: Daily Tech Poster
+name: X-AutoPosting Bot
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # 8:00 AM UTC (Morning Post)
-    - cron: '0 20 * * *' # 8:00 PM UTC (Evening Post)
-  workflow_dispatch:      # Allows you to run it manually for testing
+    - cron: '0 8 * * *'  # Morning (System Design)
+    - cron: '0 20 * * *' # Evening (Tech Facts)
+  workflow_dispatch:      # Manual trigger with choice
+    inputs:
+      mode:
+        description: 'Which mode to run?'
+        required: true
+        default: 'fitness_tips'
+        type: choice
+        options:
+          - fitness_tips
+          - book_quotes
+          - system_design
+          - tech_facts
+
+# Global environment variables (No more repeating them!)
+env:
+  TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+  TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+  TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+  TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+  TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
 
 jobs:
   post:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Crucial for public repos to allow the push
+    
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated to v4
+        with:
+          fetch-depth: 0 # Ensures full history for stable rebasing
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Updated to v5
         with:
           python-version: '3.12'
+          cache: 'pip' # Speeds up future runs
 
       - name: Install Dependencies
-        run: pip install tweepy python-dotenv
+        run: pip install -r requirements.txt
 
+      # Dynamic Morning Post
       - name: Run Morning Post
-        if: github.event.schedule == '0 8 * * *' || github.event_name == 'workflow_dispatch'
-        env:
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-        run: python main.py system_design
+        if: github.event.schedule == '0 8 * * *'
+        run: python main.py fitness_tips
 
+      # Dynamic Evening Post
       - name: Run Evening Post
-        if: github.event.schedule == '0 20 * * *' || github.event_name == 'workflow_dispatch'
-        env:
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
-          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-        run: python main.py tech_facts
+        if: github.event.schedule == '0 20 * * *'
+        run: python main.py book_quotes
+
+      # Manual Trigger logic
+      - name: Run Manual Post
+        if: github.event_name == 'workflow_dispatch'
+        run: python main.py ${{ github.event.inputs.mode }}
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # 1. Add all changes made by the python script
           git add -A
-          
-          # 2. Stash them so the working directory is 'clean' for the pull
           git stash
-          
-          # 3. Pull the latest from the repo (to avoid 'rejected' errors)
           git pull --rebase origin main
-          
-          # 4. Bring your changes back
           git stash pop || echo "No changes to pop"
           
-          # 5. Commit and Push
           git add -A
-          git diff-index --quiet HEAD || git commit -m "Update post pointers [skip ci]"
-          git push
+          # Only commit if there are actual changes to JSON files
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update post pointers [skip ci]" && git push)
