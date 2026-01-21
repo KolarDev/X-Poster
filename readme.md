@@ -1,70 +1,50 @@
-# 🚀 X-AutoLearning: Daily Tech Automation Bot
+# 🚀 X-AutoPoster Bot
 
-A fully automated "Learning-in-Public" bot that posts daily **System Design** insights and **Tech Facts** directly to X (formerly Twitter). No hosting costs, no servers—just GitHub Actions and pure Python.
+A universal, fully automated bot that posts scheduled content directly to X (formerly Twitter). Whether it's **Fitness Tips**, **Book Quotes**, or **Daily Code Challenges**, this bot handles the scheduling, formatting, and threading for you.
 
 ### ✨ Key Features
 
-* **Automated Scheduling:** Posts every morning (System Design) and evening (Tech Facts).
-* **Quote-Tweet Logic:** Automatically chains daily posts together via Quote Retweets to build a visible learning history.
-* **Stateful Memory:** Uses a `progress.json` file to track threads and pointers.
-* **Zero Cost:** Runs entirely on the GitHub Free Tier.
+* **Universal Content Support:** Easily add any niche (Fitness, Cooking, Tech) via JSON.
+* **Smart Chaining:** Automatically Quote-Tweets the previous post in a series to create visible, easy-to-follow threads.
+* **Automated & Manual Triggers:** Runs on a precise schedule or via a manual "one-click" trigger with a category dropdown.
+* **Zero Maintenance:** Powered by GitHub Actions—no servers, no databases, no costs.
 
 ---
 
 ## 🛠️ Prerequisites
 
-Before you begin, you will need:
-
 1. An **X Developer Account** (Free or Basic tier).
 2. A **GitHub Account**.
-3. Python 3.9+ installed locally.
+3. Python 3.12+ (Recommended).
 
 ---
 
 ## 🚀 Quick Start Guide
 
-### 1. Clone the Repository
+### 1. Clone & Prepare
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/YOUR_USERNAME/X-AutoPoster-Bot.git
+cd X-AutoPoster-Bot
 
 ```
 
-### 2. Configure X API Keys
-
-You must enable **Read and Write** permissions on your X App.
+### 2. Configure X API Permissions
 
 1. Go to the [X Developer Portal](https://developer.x.com/en/portal/dashboard).
-2. **App Settings:** Set User Authentication to **"Read and Write"**.
-3. **Keys and Tokens:** Regenerate and save the following:
-* `API Key` & `API Key Secret` (Consumer Keys)
-* `Access Token` & `Access Token Secret`
-* `Bearer Token`
+2. **App Settings:** Click the gear icon and set **User authentication settings** to **"Read and Write"**.
+3. **Keys and Tokens:** Regenerate your **Access Token** and **Secret**. (Note: You must regenerate them *after* changing permissions to "Read and Write").
+
+### 3. Setup GitHub Secrets & Permissions
+
+To allow the bot to post and save its progress:
+
+1. **Secrets:** Go to **Settings > Secrets and variables > Actions** and add:
+* `TWITTER_API_KEY`, `TWITTER_API_SECRET`
+* `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_TOKEN_SECRET`
 
 
-
-### 3. Setup GitHub Secrets
-
-To keep your keys safe, do **not** hardcode them. Add them as Repository Secrets:
-
-1. Navigate to your repo on GitHub: **Settings > Secrets and variables > Actions**.
-2. Add a **New repository secret** for each:
-* `TWITTER_API_KEY`
-* `TWITTER_API_SECRET`
-* `TWITTER_ACCESS_TOKEN`
-* `TWITTER_ACCESS_TOKEN_SECRET`
-* `TWITTER_BEARER_TOKEN`
-
-
-
-### 4. Enable Workflow Permissions
-
-For the bot to save its progress back to GitHub:
-
-1. Go to **Settings > Actions > General**.
-2. Change **Workflow permissions** to **"Read and write permissions"**.
-3. Click **Save**.
+2. **Permissions:** Go to **Settings > Actions > General**, scroll to **Workflow permissions**, select **"Read and write permissions"**, and click **Save**.
 
 ---
 
@@ -72,74 +52,160 @@ For the bot to save its progress back to GitHub:
 
 ```text
 ├── .github/workflows/
-│   └── post_scheduler.yml  # The "brain" that runs the schedule
-├── content/
-│   ├── system_design.json  # Your library of system design posts
-│   └── tech_facts.json     # Your library of fun tech facts
-├── modules/
-│   ├── designer.py         # Formatter for System Design posts
-│   ├── fact_checker.py     # Formatter for Tech Facts
-│   └── coder.py            # Formatter for LeetCode posts
-├── main.py                 # Core logic and file handling
-├── poster.py               # Tweepy wrapper for X API
-├── progress.json           # Tracks current thread IDs and status
-└── requirements.txt        # Python dependencies
+│   └── post_scheduler.yml  # Automates the schedule & manual triggers
+├── contents/               # Your JSON data files (e.g., fitness_tips.json)
+├── modules/                # Custom formatters (e.g., fitness.py, quotes.py)
+├── main.py                 # The core engine
+├── poster.py               # Handles X API interaction
+├── progress.json           # Stores Thread IDs to enable Quote-Tweets
+└── requirements.txt        # Dependencies (tweepy, python-dotenv)
 
 ```
 
 ---
 
-## 📝 Customizing Content
+## 📝 Adding Your Own Content
 
-### Adding Posts
+### Step 1: Create a Content File
 
-Open `content/system_design.json`. Add your objects following this structure:
+Create a new file in `contents/your_topic.json`:
 
 ```json
-{
-  "count": 1,
-  "topic": "Load Balancers",
-  "body": "Your punchy explanation here...",
-  "tags": "#SystemDesign #Tech",
-  "next_post": true
-}
+[
+  {
+    "count": 1,
+    "topic": "The Perfect Squat",
+    "body": "Keep your back straight and drive through your heels...",
+    "next_post": true
+  }
+]
 
 ```
 
-> **Note:** Ensure only **one** item has `"next_post": true`. The bot will automatically move this flag to the next item after posting.
+### Step 2: Create a Formatter
 
-### Changing the Schedule
+Create a file in `modules/your_topic.py` to define how your post looks:
 
-The bot uses **GitHub Actions Cron Syntax**. Edit `.github/workflows/post_scheduler.yml`:
+```python
+def format_my_topic(item):
+    return f"🌟 {item['topic']}\n\n{item['body']}\n\n#Fitness"
 
-* Morning Post: `0 8 * * *` (8:00 AM UTC)
-* Evening Post: `0 20 * * *` (8:00 PM UTC)
+```
+
+### Step 3: Register in `main.py`
+
+Add your new module to the `FORMATTERS` dictionary in `main.py`.
+
+---
+
+## ⏰ Scheduling
+
+The bot is pre-configured to post twice a day. Edit `.github/workflows/post_scheduler.yml` to change the times:
+
+* **Morning Post:** `0 8 * * *` (8:00 AM UTC)
+* **Evening Post:** `0 20 * * *` (8:00 PM UTC)
 
 ---
 
 ## 🧪 Testing Locally
 
-1. Install dependencies:
-```bash
-pip install -r requirements.txt
+1. Install dependencies: `pip install -r requirements.txt`
+2. Create a `.env` file with your X API keys.
+3. Run: `python main.py fitness_tips`
+
+---
+
+
+---
+
+## 1. What to edit in `main.py`
+
+The `main.py` file is designed to be generic, but it needs to know about your custom "styling" (formatters).
+
+### A. The Imports
+
+If a user creates a new file called `modules/cooking.py`, they **must** import it at the top of `main.py`:
+
+```python
+# ADD THIS:
+from modules.cooking import format_recipe 
 
 ```
 
+### B. The `FORMATTERS` Dictionary
 
-2. Create a `.env` file with your keys.
-3. Run the script for a specific mode:
-```bash
-python main.py system_design
+This is the "Brain" that connects the mode name to the styling function. If it’s not in this dictionary, the bot will use a basic, boring fallback style.
+
+```python
+FORMATTERS = {
+    "fitness_tips": format_fitness,
+    "book_quotes": format_quotes,
+    "cooking": format_recipe  # <--- ADD THIS LINE
+}
 
 ```
 
+> **Rule:** The key `"cooking"` must match exactly the name of the JSON file in the contents folder (e.g., `contents/cooking.json`).
 
+---
+
+## 2. What to edit in the `.yml` file
+
+The YAML file is the most important part for automation. If a user adds a new category, they need to update three places in the `.yml`.
+
+### A. The `workflow_dispatch` (The Dropdown Menu)
+
+This allows users to manually test their new category from the GitHub "Actions" tab.
+
+```yaml
+    inputs:
+      mode:
+        options:
+          - fitness_tips
+          - book_quotes
+          - cooking  # <--- ADD YOUR NEW MODE HERE
+
+```
+
+### B. The `schedule` (The Clock)
+
+GitHub uses UTC time. If a user wants a third post at midday, they add a new cron line.
+
+```yaml
+  schedule:
+    - cron: '0 8 * * *'  # Morning
+    - cron: '0 12 * * *' # ADDED: Midday Post
+    - cron: '0 20 * * *' # Evening
+
+```
+
+### C. The `steps` (The Execution)
+
+This is where you tell the bot *which* file to run at *which* time. You must add a new block for every scheduled time.
+
+```yaml
+      # Example: New Midday Post Step
+      - name: Run Midday Post
+        if: github.event.schedule == '0 12 * * *'
+        run: python main.py cooking  # <--- Run the 'cooking' logic
+
+```
+
+---
+
+## 3. Summary of the "Handoff"
+
+To help you understand better, see this simple 3-step connection:
+
+1. **Create Content:** Make `contents/art.json`.
+2. **Create Formatter:** Make `modules/art.py` and link it in `main.py`'s `FORMATTERS`.
+3. **Set Time:** Add the cron time and the `python main.py art` command to the `.yml`.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you have better content or more advanced system design topics, feel free to fork the repo and submit a PR.
+Feel free to fork this repo and add new formatters or improved logic! Submit a PR with your changes.
 
 ---
 
@@ -149,4 +215,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-**Made with ❤️ by [Kolardev]**
+**Developed by [Kolardev]**
+
+Would you like me to help you set up a **"Troubleshooting"** section for common errors like the 403 Forbidden or Git Push Rejections?
