@@ -4,7 +4,7 @@ A universal, fully automated bot that posts scheduled content directly to X (for
 
 ### ✨ Key Features
 
-* **Universal Content Support:** Easily add any niche (Fitness, Cooking, Tech) via JSON.
+* **Universal Content Support:** Easily add any niche (Fitness, Qoutes, Tech) via JSON.
 * **Smart Chaining:** Automatically Quote-Tweets the previous post in a series to create visible, easy-to-follow threads.
 * **Automated & Manual Triggers:** Runs on a precise schedule or via a manual "one-click" trigger with a category dropdown.
 * **Zero Maintenance:** Powered by GitHub Actions—no servers, no databases, no costs.
@@ -116,19 +116,17 @@ The bot is pre-configured to post twice a day. Edit `.github/workflows/post_sche
 ---
 
 
----
-
 ## 1. What to edit in `main.py`
 
 The `main.py` file is designed to be generic, but it needs to know about your custom "styling" (formatters).
 
 ### A. The Imports
 
-If a user creates a new file called `modules/cooking.py`, they **must** import it at the top of `main.py`:
+If a user creates a new file called `modules/fitness.py`, they **must** import it at the top of `main.py`:
 
 ```python
 # ADD THIS:
-from modules.cooking import format_recipe 
+from modules.fitness import format_fitness 
 
 ```
 
@@ -138,14 +136,15 @@ This is the "Brain" that connects the mode name to the styling function. If it�
 
 ```python
 FORMATTERS = {
-    "fitness_tips": format_fitness,
+    # content file name: imported formatter function
+    "fitness_tips": format_fitness,  
     "book_quotes": format_quotes,
     "cooking": format_recipe  # <--- ADD THIS LINE
 }
 
 ```
 
-> **Rule:** The key `"cooking"` must match exactly the name of the JSON file in the contents folder (e.g., `contents/cooking.json`).
+> **Rule:** The key `"fitness_tips"` must match exactly the name of the JSON file in the contents folder (e.g., `contents/fitness_tips.json`).
 
 ---
 
@@ -187,7 +186,7 @@ This is where you tell the bot *which* file to run at *which* time. You must add
       # Example: New Midday Post Step
       - name: Run Midday Post
         if: github.event.schedule == '0 12 * * *'
-        run: python main.py cooking  # <--- Run the 'cooking' logic
+        run: python main.py fitness_tips  # <--- Run the 'fitness_tips' logic
 
 ```
 
@@ -216,5 +215,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 **Developed by [Kolardev]**
-
-Would you like me to help you set up a **"Troubleshooting"** section for common errors like the 403 Forbidden or Git Push Rejections?
