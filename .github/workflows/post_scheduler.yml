@@ -1,23 +1,20 @@
-name: X-AutoPosting Bot
+name: X-AutoPoster Bot
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # Morning (System Design)
-    - cron: '0 20 * * *' # Evening (Tech Facts)
+    - cron: '0 8 * * *'  # Morning Post (8:00 AM UTC)
+    - cron: '0 20 * * *' # Evening Post (8:00 PM UTC)
   workflow_dispatch:      # Manual trigger with choice
     inputs:
       mode:
-        description: 'Which mode to run?'
+        description: 'Which content category to post?'
         required: true
         default: 'fitness_tips'
         type: choice
         options:
           - fitness_tips
           - book_quotes
-          - system_design
-          - tech_facts
 
-# Global environment variables (No more repeating them!)
 env:
   TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
   TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
@@ -29,34 +26,36 @@ jobs:
   post:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Crucial for public repos to allow the push
+      contents: write
     
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4 # Updated to v4
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Ensures full history for stable rebasing
+          fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5 # Updated to v5
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip' # Speeds up future runs
+          cache: 'pip'
 
       - name: Install Dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install tweepy python-dotenv
+          # If you have a requirements.txt, use: pip install -r requirements.txt
 
-      # Dynamic Morning Post
+      # Morning Logic
       - name: Run Morning Post
         if: github.event.schedule == '0 8 * * *'
         run: python main.py fitness_tips
 
-      # Dynamic Evening Post
+      # Evening Logic
       - name: Run Evening Post
         if: github.event.schedule == '0 20 * * *'
         run: python main.py book_quotes
 
-      # Manual Trigger logic
+      # Manual Logic (Uses the dropdown selection)
       - name: Run Manual Post
         if: github.event_name == 'workflow_dispatch'
         run: python main.py ${{ github.event.inputs.mode }}
@@ -65,12 +64,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add -A
           git stash
           git pull --rebase origin main
           git stash pop || echo "No changes to pop"
-          
           git add -A
-          # Only commit if there are actual changes to JSON files
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update post pointers [skip ci]" && git push)
