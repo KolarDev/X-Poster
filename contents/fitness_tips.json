@@ -1,0 +1,16 @@
+[
+  {
+    "count": 1,
+    "topic": "The Perfect Squat",
+    "body": "Keep your feet shoulder-width apart, back straight, and drive through your heels. Depth matters more than weight!",
+    "tags": "#FitnessTips #Squats",
+    "next_post": true
+  },
+  {
+    "count": 2,
+    "topic": "Hydration",
+    "body": "Drink at least 3 liters of water daily. Hydration is the key to muscle recovery and mental clarity.",
+    "tags": "#Health #Hydration",
+    "next_post": false
+  }
+]

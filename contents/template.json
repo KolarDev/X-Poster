@@ -1,0 +1,12 @@
+[
+  {
+    "count": 1,
+    "body": "This is my first automated post!",
+    "next_post": true
+  },
+  {
+    "count": 2,
+    "body": "This is my second post!",
+    "next_post": false
+  }
+]

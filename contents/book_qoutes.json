@@ -1,0 +1,18 @@
+[
+  {
+    "count": 1,
+    "author": "James Clear",
+    "book": "Atomic Habits",
+    "quote": "You do not rise to the level of your goals. You fall to the level of your systems.",
+    "tags": "#Habits #Growth",
+    "next_post": true
+  },
+  {
+    "count": 2,
+    "author": "Cal Newport",
+    "book": "Deep Work",
+    "quote": "To produce at your peak level you need to work for extended periods with full concentration on a single task.",
+    "tags": "#DeepWork #Focus",
+    "next_post": false
+  }
+]
